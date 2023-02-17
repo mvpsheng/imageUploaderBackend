@@ -5,7 +5,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,15 +32,33 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
     }
 
+    private File convertMultiPartToFile(MultipartFile file ) throws IOException {
+        File convFile = new File( file.getOriginalFilename() );
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write( file.getBytes() );
+        fos.close();
+        return convFile;
+    }
     @Override
-    public void save(MultipartFile file) {
+    public String save(MultipartFile file) {
+        File newfile;
         try {
+
             Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+            newfile = convertMultiPartToFile(file);
+
+            System.out.println(newfile.toURL().toString());
+
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("A file of that name already exists.");
             }
             throw new RuntimeException(e.getMessage());
+        }
+        try {
+            return newfile.toURL().toString();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
         }
     }
 

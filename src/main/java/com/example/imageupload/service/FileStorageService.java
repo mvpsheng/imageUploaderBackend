@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public interface FileStorageService {
     public void init();
 
-    public void save(MultipartFile file);
+    public String save(MultipartFile file);
 
     public Resource load(String filename);
 

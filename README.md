@@ -1,8 +1,12 @@
 ## 后端流程
 * uploading image to a static folder in the server
 * downloading image from server with the link
-* display list of images
-  
+* display list of image
+
+1. 在服务器端创建图片文件夹
+2. 接收到的文件保存到图片文件夹
+3. 返回图片链接
+
 ## Java实现
   资源：https://www.bezkoder.com/spring-boot-image-upload-thymeleaf/
   文件处理类：MultipartFile
@@ -14,3 +18,9 @@ Service类实现思路：
 
 图片对象：Image
 属性： name、URL。
+
+## 遇到的问题
+* 问题1：
+>WARN 17996 --- [nio-8080-exec-6] s.w.m.s.StandardServletMultipartResolver : 
+>Failed to perform cleanup of multipart items
+

@@ -22,17 +22,18 @@ public class ImageController {
     @PostMapping
     public String uploadImage(@RequestParam("file") MultipartFile file) {
         String message = "";
+        String imageURL = "";
 
         try {
-            System.out.println("enter save()");
-            fileStorageService.save(file);
-            System.out.println("end save()");
+            imageURL = fileStorageService.save(file);
+//            imageURL = file.getResource().getURL().toString();
+//            System.out.println(imageURL + " imageURL");
             message = "Uploaded the image successfully: " + file.getOriginalFilename();
             System.out.println(message);
         } catch (Exception e) {
             message = "Could not upload the image: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
         }
 
-        return "upload_form";
+        return imageURL;
     }
 }
