@@ -11,6 +11,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ImageInfo {
-    private String name;
     private String url;
+    private String label;
 }

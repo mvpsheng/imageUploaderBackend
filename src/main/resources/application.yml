@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/imageuploader?useSSL=false&autoReconnect=true&characterEncoding=utf8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+
+  web:
+    resources:
+      static-locations: file:D:\code\projects\backendProjects\imageUploaderBackend\uploads

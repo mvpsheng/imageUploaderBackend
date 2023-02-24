@@ -1,12 +1,12 @@
 package com.example.imageupload.controller;
 
+import com.example.imageupload.model.ImageInfo;
 import com.example.imageupload.service.FileStorageService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * FileName: ImageController
@@ -19,15 +19,18 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImageController {
     private final FileStorageService fileStorageService;
 
+/**
+ *  功能： 将图片保存到服务器端， 图片的url和label保存到数据库，返回给客户端url，
+ *
+ * */
     @PostMapping
-    public String uploadImage(@RequestParam("file") MultipartFile file) {
+    public String uploadImage(@RequestParam("file") MultipartFile file, String label) {
         String message = "";
         String imageURL = "";
 
         try {
-            imageURL = fileStorageService.save(file);
-//            imageURL = file.getResource().getURL().toString();
-//            System.out.println(imageURL + " imageURL");
+            imageURL = fileStorageService.save(file, label);
+            System.out.println(imageURL + " image url");
             message = "Uploaded the image successfully: " + file.getOriginalFilename();
             System.out.println(message);
         } catch (Exception e) {
@@ -35,5 +38,10 @@ public class ImageController {
         }
 
         return imageURL;
+    }
+
+    @GetMapping
+    public List<ImageInfo> getAllImages() {
+        return fileStorageService.getAllImages();
     }
 }

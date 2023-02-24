@@ -1,9 +1,11 @@
 package com.example.imageupload.service;
 
+import com.example.imageupload.model.ImageInfo;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -14,7 +16,7 @@ import java.util.stream.Stream;
 public interface FileStorageService {
     public void init();
 
-    public String save(MultipartFile file);
+    public String save(MultipartFile file, String label);
 
     public Resource load(String filename);
 
@@ -23,4 +25,6 @@ public interface FileStorageService {
     public void deleteAll();
 
     public Stream<Path> loadAll();
+
+    List<ImageInfo> getAllImages();
 }

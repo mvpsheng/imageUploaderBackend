@@ -2,6 +2,7 @@ package com.example.imageupload.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -26,5 +27,11 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 //暴露哪些原始请求头部信息
                 .exposedHeaders("*");
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:D:\\code\\projects\\backendProjects\\imageUploaderBackend\\uploads");
     }
 }
